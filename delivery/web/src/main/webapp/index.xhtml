@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Orders</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <h:outputStylesheet name="css/screen.css"/>
+</h:head>
+<h:body>
+    <div id="container">
+        <h1>Clean Architecture Demo</h1>
+
+        <div id="content">
+            <p>
+                You can manage items and create an order with this frontend.
+            </p>
+
+            <p><strong>Guide</strong></p>
+            <ol>
+                <li>Go to <a href="items.xhtml">Manage Items</a> and create a few items</li>
+                <li>Come back to <a href="index.xhtml">the Index</a> and add some items into the order</li>
+                <li>Enter a name into the name field</li>
+                <li>Submit the order using "Create Order" and notice that an order record has been written to
+                    <code>java:jboss/datasources/clean-architectureDS</code></li>
+            </ol>
+            <p>
+
+            </p>
+
+            <h2>Order</h2>
+            <h:form>
+
+                <h:messages/>
+                Your Name: <h:inputText value="#{orderModel.userName}"/><br/>
+
+                Items in Order:
+                <h:dataTable value="#{orderModel.orderItems}" var="var" style="width: 50%">
+                    <h:column>
+                        <f:facet name="header">
+                            Item
+                        </f:facet>
+                        <h:outputText value="#{var.item}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            Remove
+                        </f:facet>
+                        <h:commandLink id="remove"
+                                       action="${orderController.removeItem(var)}">Remove item</h:commandLink>
+                    </h:column>
+                </h:dataTable>
+
+                <h2>Add new Item</h2>
+
+                <h:selectOneListbox size="1" value="#{orderModel.selectedItem}">
+                    <f:selectItems value="#{itemController.items}"/>
+                </h:selectOneListbox>
+                <h:commandButton action="#{orderController.addItem()}" value="Add item"/>
+
+                <br/>
+
+                <h:commandButton action="#{orderController.createOrder()}" value="Create the Order"/>
+            </h:form>
+
+            <a href="items.xhtml">Manage Items</a>
+        </div>
+
+        <div id="footer">
+            <p>
+                This project was generated from a Maven archetype from
+                JBoss.<br/> Sources: <a
+                    href="https://github.com/mp911de/CleanArchitecture">https://github.com/mp911de/CleanArchitecture</a>
+            </p>
+        </div>
+    </div>
+</h:body>
+</html>
